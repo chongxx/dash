@@ -10,18 +10,19 @@
 // +----------------------------------------------------------------------
 use think\Route;
 
-
-//Route::rule('news', 'news/index');
-
 // miss 这个用来处理404也不知道是不是正确的做法？
 //Route::miss('notfind/index');
 
-Route::get('news', 'news/read');
-//Route::post('user', 'user/create');
+// 查看文章详情
+Route::get('article/:id', 'article/getarticle');
+// 添加文章
+Route::post('create_article', 'article/createarticle');
+// 编辑文章的页面
+Route::get('edit_article','article/editarticle');
 
-// user route
-Route::get('users', 'user/getall');
-Route::post('create_user', 'user/create');
+
+Route::get('/','Home/home');
+
 
 return [
     '__pattern__' => [
@@ -32,5 +33,7 @@ return [
         ':name' => ['index/hello', ['method' => 'post']],
     ],
     // 静态配置路由
-    // 'news' => ['news/index', ['method' => 'post|get|put']],
+    '[article]' => [
+        ':aid' => ['article/']
+    ]
 ];
