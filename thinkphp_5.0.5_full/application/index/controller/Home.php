@@ -19,11 +19,6 @@ class Home
     {
         $home_model = new HomeModel();
         $articles = $home_model->getArticleList();
-
-//        $articles[0]->timeH = "time_h";
-
-//        return $articles[0];
-//        return var_dump($articles[0]);
         return view('index', ['articles' => $articles]);
     }
 }

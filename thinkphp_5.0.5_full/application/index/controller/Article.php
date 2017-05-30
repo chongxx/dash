@@ -42,7 +42,6 @@ class Article extends Controller
                 'author' => $article['author'],
                 'content' => $article['content']
             ]);
-//            return json($article);
         } else {
             return 'not find';
         }
