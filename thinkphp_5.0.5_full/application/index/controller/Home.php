@@ -22,8 +22,8 @@ class Home
 
 //        $articles[0]->timeH = "time_h";
 
-        return $articles[0];
+//        return $articles[0];
 //        return var_dump($articles[0]);
-//        return view('index', ['articles' => $articles]);
+        return view('index', ['articles' => $articles]);
     }
 }

@@ -19,8 +19,14 @@ class HomeModel extends Model
         // 在数据库查询最新的10篇文章
         $articles = Db::table('article')
             ->page(1, 10)
+            // 按修改时间倒序
+            ->order('time desc')
             ->select();
-        new ArticleModel($articles);
+
+        foreach ($articles as &$article) {
+            $article['time_h'] = date('Y-m-d H:i:s', $article['time']);
+        }
+
         return $articles;
     }
 }
