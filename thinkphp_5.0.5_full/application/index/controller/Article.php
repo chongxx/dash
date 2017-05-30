@@ -34,13 +34,16 @@ class Article extends Controller
         $aid = end($path_arr);
         $article = $this->article_model->getArticle($aid);
 
+        $article['time_h'] = date('Y-m-d H:i:s', $article['time']);
         if ($article) {
             // 添加一次阅读量
 
             return view('article', [
                 'title' => $article['title'],
                 'author' => $article['author'],
-                'content' => $article['content']
+                'content' => $article['content'],
+                'desc' => $article['desc'],
+                'time_h' => $article['time_h'],
             ]);
         } else {
             return 'not find';
