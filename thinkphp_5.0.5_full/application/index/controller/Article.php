@@ -29,25 +29,11 @@ class Article extends Controller
         $request = Request::instance();
 
         // 获取URL地址中的PATH_INFO信息 不含后缀
+        // TODO 路由的判断有问题，需要修改
         $path = $request->path();
         $path_arr = explode('/', $path);
         $aid = end($path_arr);
-        $article = $this->article_model->getArticle($aid);
-
-        $article['time_h'] = date('Y-m-d H:i:s', $article['time']);
-        if ($article) {
-            // 添加一次阅读量
-
-            return view('article', [
-                'title' => $article['title'],
-                'author' => $article['author'],
-                'content' => $article['content'],
-                'desc' => $article['desc'],
-                'time_h' => $article['time_h'],
-            ]);
-        } else {
-            return 'not find';
-        }
+        return $this->articleDetailView($aid);
     }
 
     public function createArticle()
@@ -66,9 +52,10 @@ class Article extends Controller
             );
 
         if ($result == null) {
-            return json(['ok' => 0]);
+            // TODO 创建文章失败的处理
+            return "just fail";
         } else {
-            return json(['ok' => 1, 'aid' => $result]);
+            return $this->articleDetailView($result);
         }
     }
 
@@ -76,6 +63,28 @@ class Article extends Controller
     public function editArticle()
     {
         return view('edit_article');
+    }
+
+    /**
+     * @param $aid
+     * @return string|\think\response\View
+     */
+    private function articleDetailView($aid)
+    {
+        $article = $this->article_model->getArticle($aid);
+        $article['time_h'] = date('Y-m-d H:i:s', $article['time']);
+        if ($article) {
+            // TODO 修改数据库，添加一次阅读量。
+            return view('article', [
+                'title' => $article['title'],
+                'author' => $article['author'],
+                'content' => $article['content'],
+                'desc' => $article['desc'],
+                'time_h' => $article['time_h'],
+            ]);
+        } else {
+            return 'not find';
+        }
     }
 
 }
