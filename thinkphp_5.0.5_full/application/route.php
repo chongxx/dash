@@ -18,10 +18,19 @@ Route::get('article/:id', 'article/getarticle');
 // 添加文章
 Route::post('create_article', 'article/createarticle');
 // 编辑文章的页面
-Route::get('edit_article','article/editarticle');
+Route::get('edit_article', 'article/editarticle');
 
 
-Route::get('/','Home/home');
+Route::get('/', 'Home/home');
+
+// 登录注册的页面
+Route::get('login', 'UserSystem/viewLogin');
+// 登录接口
+Route::post('session', 'UserSystem/login');
+// 注册接口
+Route::post('register', 'UserSystem/register');
+// 重置密码
+Route::post('reset_pwd', 'UserSystem/resetPassword');
 
 
 return [
