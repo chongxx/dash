@@ -60,8 +60,15 @@ class Article extends Controller
     }
 
     // 返回编辑文章的页面
+    // 编辑文章需要查看是否有权限
     public function editArticle()
     {
+        // 获取 token
+        // 有token 判断是否过期，是否正确
+
+        // 无token 跳转到登录
+
+
         return view('edit_article');
     }
 

@@ -11,6 +11,7 @@ namespace app\index\controller;
 // 负责用户的注册和登录
 use app\index\model\UserSystemModel;
 use think\Controller;
+use think\Cookie;
 use think\Request;
 
 class UserSystem extends Controller
@@ -24,8 +25,21 @@ class UserSystem extends Controller
 
     public function login()
     {
-        return "login";
+        $request = Request::instance();
+        $param = $request->param();
 
+
+        // 1. 数据直接到数据库里查询
+        $user_system_model = new UserSystemModel();
+        $token = $user_system_model->login($param['username'], $param['pwd']);
+
+        if ($token) {
+            // 设置Cookie 有效期为 3600秒
+            Cookie::set('token', $token, 3600 * 24 * 10);
+            return $token;
+        } else {
+            return "login fail";
+        }
     }
 
     public function register()
