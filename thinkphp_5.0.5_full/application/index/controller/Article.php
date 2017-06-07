@@ -10,7 +10,9 @@ namespace app\index\controller;
 
 
 use app\index\model\ArticleModel;
+use app\index\model\UserSystemModel;
 use think\Controller;
+use think\Cookie;
 use think\Request;
 
 class Article extends Controller
@@ -65,11 +67,21 @@ class Article extends Controller
     {
         // 获取 token
         // 有token 判断是否过期，是否正确
+        if (Cookie::has('token')) {
+            $token = Cookie::get('token');
 
-        // 无token 跳转到登录
+            $user_sysytem_model = new UserSystemModel();
 
-
-        return view('edit_article');
+            if ($user_sysytem_model->checkToken($token)) {
+                return view('edit_article');
+            } else {
+                // token 不可用，跳转到登录
+                $this->redirect('/login');
+            }
+        } else {
+            // cookie 中没有token，跳转到登录
+            $this->redirect('/login');
+        }
     }
 
     /**
